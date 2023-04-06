@@ -1,6 +1,5 @@
 <?php
-session_start();
-require "bd.php";
+require_once("./include/bd.php");
 
 if (isset($_SESSION['id']) != null) {
     header('Location: index.php');
@@ -21,14 +20,7 @@ if (isset($_SESSION['id']) != null) {
 </head>
 
 <body>
-    <header>
-        <nav>
-            <a href="index.php">index</a>
-            <a href="inscription.php">inscription</a>
-            <a href="connexion.php">connexion</a>
-            <a href="disconnect.php">Deconnexion</a>
-        </nav>
-    </header>
+    <?php require_once('./include/header.php') ?>
     <main>
 
         <form method="POST" action="" id="login">
@@ -43,7 +35,7 @@ if (isset($_SESSION['id']) != null) {
                 $email = htmlspecialchars($_POST['email']);
                 $password = $_POST['password'];
 
-                $recupUser = $bdd->prepare("SELECT * FROM utilisateurs WHERE email = ? AND password = ?");
+                $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
                 $recupUser->execute([$email, $password]);
                 $result = $recupUser->fetch(PDO::FETCH_ASSOC);
 
@@ -62,10 +54,6 @@ if (isset($_SESSION['id']) != null) {
         <p id="message"></p>
     </main>
 
-    <footer>
-        <a href="https://github.com/Dylan-olivro"><i class="fa-brands fa-github"></i></a>
-        <a href="https://github.com/Charles-Caltagirone"><i class="fa-brands fa-github"></i></a>
-    </footer>
 </body>
 
 </html>

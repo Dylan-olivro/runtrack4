@@ -1,6 +1,5 @@
 <?php
-session_start();
-require("bd.php");
+require_once("./include/bd.php");
 
 if (isset($_SESSION['id']) != null) {
     header('Location: index.php');
@@ -23,14 +22,7 @@ if (isset($_SESSION['id']) != null) {
 </head>
 
 <body>
-    <header>
-        <nav>
-            <a href="index.php">index</a>
-            <a href="inscription.php">inscription</a>
-            <a href="connexion.php">connexion</a>
-            <a href="disconnect.php">Deconnexion</a>
-        </nav>
-    </header>
+    <?php require_once('./include/header.php') ?>
 
     <main>
 
@@ -54,9 +46,9 @@ if (isset($_SESSION['id']) != null) {
                 $password = $_POST['password'];
                 $cpassword = $_POST['cpassword'];
 
-                $insertUser = $bdd->prepare("INSERT INTO utilisateurs (username, email, password)VALUES(?,?,?)");
+                $insertUser = $bdd->prepare("INSERT INTO users (username, email, password)VALUES(?,?,?)");
                 $insertUser->execute([$username, $email, $password]);
-                header("Location: inscription.php");
+                header("Location: connexion.php");
             }
             ?>
             <button type="submit" name="envoi" class="button" value="Sign Up" id="button">envoyer</button>

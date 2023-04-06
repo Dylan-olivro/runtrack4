@@ -1,6 +1,5 @@
 <?php
-session_start();
-require("bd.php");
+require_once("./include/bd.php");
 
 ?>
 <!DOCTYPE html>
@@ -16,14 +15,8 @@ require("bd.php");
 </head>
 
 <body>
-    <header>
-        <nav>
-            <a href="index.php">index</a>
-            <a href="inscription.php">inscription</a>
-            <a href="connexion.php">connexion</a>
-            <a href="disconnect.php">Deconnexion</a>
-        </nav>
-    </header>
+    <?php require_once('./include/header.php') ?>
+
     <?php
     if (isset($_SESSION['id']) == null) {
         echo '<p>Bonjour Inconnu</p>';
