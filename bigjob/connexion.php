@@ -5,23 +5,7 @@ ob_start('ob_gzhandler');
 if (isset($_SESSION['id'])) {
     header('Location: index.php');
 }
-if (isset($_POST['submit'])) {
-    $email = htmlspecialchars($_POST['email']);
-    $password = $_POST['password'];
 
-    $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
-    $recupUser->execute([$email, $password]);
-    $result = $recupUser->fetch(PDO::FETCH_ASSOC);
-
-
-    if ($recupUser->rowCount() > 0) {
-
-        $_SESSION['email'] = $email;
-        $_SESSION['password'] = $password;
-        $_SESSION = $result;
-        header("Location: index.php");
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +61,26 @@ if (isset($_POST['submit'])) {
                                             </div>
 
                                         </form>
+                                        <?php
+                                        if (isset($_POST['submit'])) {
+                                            $email = htmlspecialchars($_POST['email']);
+                                            $password = $_POST['password'];
 
+                                            $recupUser = $bdd->prepare("SELECT * FROM users WHERE email = ?");
+                                            $recupUser->execute([$email]);
+                                            $result = $recupUser->fetch(PDO::FETCH_ASSOC);
+
+                                            if ($result) {
+                                                $passwordHash = $result['password'];
+                                                if ($recupUser->rowCount() > 0 && password_verify($password, $passwordHash)) {
+                                                    $_SESSION['email'] = $email;
+                                                    $_SESSION['password'] = $password;
+                                                    $_SESSION = $result;
+                                                    header("Location: index.php");
+                                                }
+                                            }
+                                        }
+                                        ?>
                                     </div>
                                     <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 

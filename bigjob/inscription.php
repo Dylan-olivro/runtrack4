@@ -10,9 +10,11 @@ if (isset($_POST['envoi'])) {
     $username = htmlspecialchars($_POST['username']);
     $email = htmlspecialchars($_POST['email']);
     $password = $_POST['password'];
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
     $cpassword = $_POST['cpassword'];
     $insertUser = $bdd->prepare("INSERT INTO users (username, email, password)VALUES(?,?,?)");
-    $insertUser->execute([$username, $email, $password]);
+    $insertUser->execute([$username, $email, $passwordHash]);
     header("Location: connexion.php");
 }
 
