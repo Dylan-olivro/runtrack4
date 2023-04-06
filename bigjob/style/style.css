@@ -1,12 +1,19 @@
 .titleIndex {
   font-size: 5rem;
 }
-.bodyIndex {
-  background-image: url(../asset/interface-gad9248dda_1280.png);
+body {
+  background-image: url(../asset/Pattern-Bg-3-01-ConvertImage.jpg);
   background-size: cover;
+  background-position: center;
   background-attachment: fixed;
 }
 .calendarTextarea {
   resize: none;
   height: 150px !important;
+}
+nav {
+  background-color: #1d1747;
+}
+nav a {
+  color: #fff !important;
 }

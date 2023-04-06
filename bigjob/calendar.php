@@ -1,5 +1,6 @@
 <?php
 require_once("./include/bd.php");
+ob_start('ob_gzhandler');
 
 if (!isset($_SESSION['id'])) {
     header('Location: index.php');
@@ -43,13 +44,13 @@ if (isset($_POST['submit'])) {
     <?php require_once('./include/header.php') ?>
 
     <main class="d-flex flex-column align-items-center">
-        <h1>Calendrier</h1>
-        <form method="post" class="border rounded p-3 w-50 text-center bg-danger-subtle ">
+        <h1 class="text-white m-4">Calendrier</h1>
+        <form method="post" class="border rounded p-3 w-50 text-center bg-primary-subtle ">
             <p>Veuillez choisir une date :</p>
             <input type="datetime-local" name="date">
             <p>Veuillez saisir un message :</p>
             <div class="form-floating">
-                <textarea class="form-control calendarTextarea bg-danger-subtle border-warning border-3" placeholder=" Leave a comment here" id="floatingTextarea" name="message"></textarea>
+                <textarea class="form-control calendarTextarea bg-primary-subtle border-primary border-3" placeholder=" Leave a comment here" id="floatingTextarea" name="message"></textarea>
                 <label for="floatingTextarea">Message</label>
             </div>
             <br><br>
@@ -60,7 +61,7 @@ if (isset($_POST['submit'])) {
             } else if (isset($succes)) { ?>
                 <p style="color: green;"><?php echo $success; ?></p>
             <?php } ?>
-            <input type="submit" name="submit" value="Envoyer la demande" class="bg-danger rounded text-white">
+            <input type="submit" name="submit" value="Envoyer la demande" class="bg-primary rounded text-white">
         </form>
 
         <?php

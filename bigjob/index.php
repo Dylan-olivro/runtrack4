@@ -1,5 +1,6 @@
 <?php
 require_once("./include/bd.php");
+ob_start('ob_gzhandler');
 
 ?>
 <!DOCTYPE html>
@@ -15,14 +16,14 @@ require_once("./include/bd.php");
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous" defer></script>
 </head>
 
-<body class="bodyIndex">
+<body>
     <?php require_once('./include/header.php') ?>
 
     <?php
     if (!isset($_SESSION['id'])) {
-        echo '<h1 class="text-center titleIndex">Bonjour Inconnu</h1>';
+        echo '<h1 class="text-center titleIndex text-white">Bonjour Inconnu</h1>';
     } else {
-        echo '<h1 class="text-center titleIndex">Bonjour ' . $_SESSION['username'] . '</h1>';
+        echo '<h1 class="text-center titleIndex text-white">Bonjour ' . $_SESSION['username'] . '</h1>';
     }
     ?>
 </body>
