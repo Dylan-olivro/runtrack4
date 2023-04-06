@@ -1,24 +1,32 @@
 <header>
-    <nav>
-        <?php
-        if (isset($_SESSION['id'])) { ?>
-            <a href="index.php">index</a>
-            <a href="calendar.php">Calendar</a>
-            <a href="disconnect.php">Deconnexion</a>
-            <?php
-            if ($_SESSION['role'] > 0) { ?>
-                <a href="checking.php">Checking</a>
-                <a href="admin.php">admin</a>
-            <?php
-            }
-        } else { ?>
-            <a href="index.php">index</a>
-            <a href="inscription.php">inscription</a>
-            <a href="connexion.php">connexion</a>
 
-        <?php
-        }
-        ?>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <span class="navbar-brand">BigJob</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <?php
+                    if (!isset($_SESSION['id'])) { ?>
+                        <a href="index.php" class="nav-link">Home</a>
+                        <a href="inscription.php" class="nav-link">Sign up</a>
+                        <a href="connexion.php" class="nav-link">Login</a>
+                    <?php } else { ?>
+                        <a href="index.php" class="nav-link">Home</a>
+                        <a href="calendar.php" class="nav-link">Calendar</a>
+                        <?php if ($_SESSION['role'] > 0) { ?>
+                            <a href="checking.php" class="nav-link">Checking</a>
+                            <a href="admin.php" class="nav-link">Admin</a>
+                        <?php } ?>
+                        <a href="disconnect.php" class="nav-link">Logout</a>
 
+                    <?php
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
     </nav>
 </header>

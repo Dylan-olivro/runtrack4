@@ -1,0 +1,12 @@
+.titleIndex {
+  font-size: 5rem;
+}
+.bodyIndex {
+  background-image: url(../asset/interface-gad9248dda_1280.png);
+  background-size: cover;
+  background-attachment: fixed;
+}
+.calendarTextarea {
+  resize: none;
+  height: 150px !important;
+}

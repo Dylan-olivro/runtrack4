@@ -14,51 +14,75 @@
 
 <body>
     <?php require_once('./include/header.php') ?>
+    <main>
 
-    <?php
-    if (isset($_SESSION['role']) > 0) {
-        $request = $bdd->prepare("SELECT * FROM users ");
-        $request->execute();
-        $result = $request->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($result as $key => $value) {
-    ?>
-            <section>
-                <form method="post">
-                    <!-- <fieldset> -->
-                    <p>User : <?= $value['username'] ?></p>
-                    <p>Email : <?= $value['email'] ?></p>
-                    <p>Role :
-                        <?php if ($value['role'] == 2) {
-                            echo 'Administrateur';
-                        } else if ($value['role'] == 1) {
-                            echo 'Modérateur';
-                        } else {
-                            echo 'Aucun';
-                        } ?></p>
+        <section class="d-flex">
+            <div class="w-75">
+                <h1 class="text-center m-4">All Users</h1>
+                <?php
+                if (isset($_SESSION['role']) > 0) {
+                    $request = $bdd->prepare("SELECT * FROM users ");
+                    $request->execute();
+                    $result = $request->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($result as $key => $value) {
+                ?>
+                        <form method="post" class="d-flex flex-wrap justify-content-center">
+                            <div class="w-25 border rounded text-center m-2 pb-2 bg-primary-subtle">
+                                <p>User : <?= $value['username'] ?></p>
+                                <p>Email : <?= $value['email'] ?></p>
+                                <p>Role :
+                                    <?php if ($value['role'] == 2) {
+                                        echo 'Administrateur';
+                                    } else if ($value['role'] == 1) {
+                                        echo 'Modérateur';
+                                    } else {
+                                        echo 'Aucun';
+                                    } ?></p>
+                                <?php
+                                if ($_SESSION['role'] == 2) {
+                                ?>
+                                    <label for="<?= $value['id'] ?>">Admin</label>
+                                    <input type="radio" id="<?= $value['id'] ?>" value="2" name="role">
+                                    <label for="<?= $value['id'] ?>">Modo</label>
+                                    <input type="radio" id="<?= $value['id'] ?>" value='1' name="role">
+                                    <label for="<?= $value['id'] ?>">Aucun</label>
+                                    <input type="radio" id="<?= $value['id'] ?>" value="0" name="role">
+
+                                    <input type="submit" id="<?= $value['id'] ?>" value="Update" name="update<?= $value['id'] ?>">
+                            </div>
+                <?php }
+                                if (isset($_POST['update' . $value['id']])) {
+
+                                    $accept = $bdd->prepare("UPDATE users SET role = ? WHERE id = ? ");
+                                    $accept->execute([$_POST['role'], $value['id']]);
+                                    header('Location: ./admin.php');
+                                }
+                            }
+                        } ?>
+                        </form>
+            </div>
+            <div>
+                <h2 class="mt-4 mb-4">Moderator & Administrator</h2>
+                <div>
                     <?php
-                    if ($_SESSION['role'] == 2) {
-                    ?>
-                        <label for="<?= $value['id'] ?>">Admin</label>
-                        <input type="radio" id="<?= $value['id'] ?>" value="2" name="role">
-                        <label for="<?= $value['id'] ?>">Modo</label>
-                        <input type="radio" id="<?= $value['id'] ?>" value='1' name="role">
-                        <label for="<?= $value['id'] ?>">Aucun</label>
-                        <input type="radio" id="<?= $value['id'] ?>" value="0" name="role">
-
-                        <input type="submit" id="<?= $value['id'] ?>" value="Update" name="update<?= $value['id'] ?>">
-            <?php }
-                    if (isset($_POST['update' . $value['id']])) {
-
-                        $accept = $bdd->prepare("UPDATE users SET role = ? WHERE id = ? ");
-                        $accept->execute([$_POST['role'], $value['id']]);
-                        header('Location: ./admin.php');
+                    foreach ($result as $key => $value) {
+                        if ($value['role'] > 0) { ?>
+                            <p class="text-primary fw-bold fs-5"><?= $value['username'] ?>, <?= $value['email'] ?>,
+                                <?php if ($value['role'] == 2) {
+                                    echo 'Administrateur';
+                                } else if ($value['role'] == 1) {
+                                    echo 'Modérateur';
+                                }
+                                ?></p>
+                    <?php
+                        }
                     }
-                }
-            } ?>
-            <!-- </fieldset> -->
-                </form>
-            </section>
 
+                    ?>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 
 </html>

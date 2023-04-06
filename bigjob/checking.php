@@ -21,38 +21,45 @@ if (isset($_SESSION['role']) < 1) {
 
 <body>
     <?php require_once('./include/header.php') ?>
+    <main>
+        <h1 class="text-center m-4">Attendance Request</h1>
+        <?php
 
-    <?php
+        if (isset($_SESSION['role']) > 0) {
+            $request = $bdd->prepare("SELECT * FROM presence WHERE isAccepted = 'waiting' ");
+            $request->execute();
+            $result = $request->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($result as $key => $value) {
+        ?>
+                <form method="post" class="d-flex flex-wrap justify-content-center">
+                    <!-- <fieldset> -->
+                    <div class="w-25 border rounded text-center m-2 pb-2 bg-success-subtle">
+                        <p>Date :<?= $value['date'] ?></p>
+                        <p>User :<?= $value['username'] ?></p>
+                        <p class="text-break">Message :<?= $value['request'] ?></p>
+                        <input type="submit" id="<?= $value['id'] ?>" value="Accept" name="accept<?= $value['id'] ?>" class="bg-success rounded text-white">
+                        <input type="submit" id="<?= $value['id'] ?>" value="Decline" name="decline<?= $value['id'] ?>" class="bg-success rounded text-white">
+                        <!-- </fieldset> -->
+                    </div>
 
-    if (isset($_SESSION['role']) > 0) {
-        $request = $bdd->prepare("SELECT * FROM presence WHERE isAccepted = 'waiting' ");
-        $request->execute();
-        $result = $request->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($result as $key => $value) {
-    ?>
-            <form method="post">
-                <!-- <fieldset> -->
-                <p>Date :<?= $value['date'] ?></p>
-                <p>User :<?= $value['username'] ?></p>
-                <p>Message :<?= $value['request'] ?></p>
-                <input type="submit" id="<?= $value['id'] ?>" value="Accept" name="accept<?= $value['id'] ?>">
-                <input type="submit" id="<?= $value['id'] ?>" value="Decline" name="decline<?= $value['id'] ?>">
-                <!-- </fieldset> -->
-            </form>
 
-    <?php
-            if (isset($_POST['accept' . $value['id']])) {
-                $accept = $bdd->prepare("UPDATE presence SET isAccepted = ? WHERE id = ? ");
-                $accept->execute(["accepted", $value['id']]);
-                header("Location: checking.php");
-            } elseif (isset($_POST['decline' . $value['id']])) {
-                $accept = $bdd->prepare("UPDATE presence SET isAccepted = ? WHERE id = ?");
-                $accept->execute(["declined", $value['id']]);
-                header("Location: checking.php");
+
+            <?php
+                if (isset($_POST['accept' . $value['id']])) {
+                    $accept = $bdd->prepare("UPDATE presence SET isAccepted = ? WHERE id = ? ");
+                    $accept->execute(["accepted", $value['id']]);
+                    header("Location: checking.php");
+                } elseif (isset($_POST['decline' . $value['id']])) {
+                    $accept = $bdd->prepare("UPDATE presence SET isAccepted = ? WHERE id = ?");
+                    $accept->execute(["declined", $value['id']]);
+                    header("Location: checking.php");
+                }
             }
         }
-    }
-    ?>
+            ?>
+                </form>
+
+    </main>
 </body>
 
 </html>
