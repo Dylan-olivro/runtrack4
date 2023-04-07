@@ -8,7 +8,7 @@ ob_start('ob_gzhandler'); ?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./styles/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous" defer></script>
 
@@ -35,9 +35,9 @@ ob_start('ob_gzhandler'); ?>
                                 <p class="m-1">Email : <?= $value['email'] ?></p>
                                 <p class="m-1">Role :
                                     <?php if ($value['role'] == 2) {
-                                        echo 'Administrateur';
+                                        echo 'Administrator';
                                     } else if ($value['role'] == 1) {
-                                        echo 'Modérateur';
+                                        echo 'Moderator';
                                     } else {
                                         echo 'Aucun';
                                     } ?></p>
@@ -73,13 +73,7 @@ ob_start('ob_gzhandler'); ?>
                     <?php
                     foreach ($result as $key => $value) {
                         if ($value['role'] == 2) : ?>
-                            <p class="text-warning fw-bold fs-5"><?= $value['username'] ?>, <?= $value['email'] ?>,
-                                <?php
-                                if ($value['role'] == 2) {
-                                    echo 'Administrateur';
-                                }
-                                ?>
-                            </p>
+                            <p class="text-warning fw-bold fs-5"><?= $value['username'] ?>, <?= $value['email'] ?>.</p>
                     <?php
                         endif;
                     }
@@ -90,18 +84,10 @@ ob_start('ob_gzhandler'); ?>
                     <?php
                     foreach ($result as $key => $value) {
                         if ($value['role'] == 1) : ?>
-                            <p class="text-warning fw-bold fs-5"><?= $value['username'] ?>, <?= $value['email'] ?>,
-                                <?php
-                                if ($value['role'] == 1) {
-                                    echo 'Moderator';
-                                }
-                                ?>
-                            </p>
-
+                            <p class="text-warning fw-bold fs-5"><?= $value['username'] ?>, <?= $value['email'] ?>.</p>
                     <?php
                         endif;
                     }
-
                     ?>
                 </div>
             </div>
